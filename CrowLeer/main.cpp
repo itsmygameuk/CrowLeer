@@ -13,6 +13,7 @@
 #include "win_getopt.h"
 #endif
 
+
 #define HELP_MSG "\
 Fast and reliable CLI web crawler with focus on pages download\n\
 For more information visit https://github.com/ERap320/CrowLeer\n\n\

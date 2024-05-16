@@ -200,14 +200,19 @@ uri parse(string original, const uri* parent, bool errOut)
 
 	try {
 		//Let cpp-netlib's uri class parse the completed URL
-		network::uri support(str);
-
+		//network::uri support(str);
+		skyr::url support(str);
 		//Convert resulting parts to our uri class
-		temp.protocol = support.scheme().to_string();
-		temp.domain = support.authority().to_string();
+//		temp.protocol = support.scheme().to_string();
+		temp.protocol = support.scheme();
+
+//		temp.domain = support.authority().to_string();
+		temp.domain = support.hostname();
 
 		//Split the path in the correct parts
-		temp.path = support.path().to_string();
+//		temp.path = support.path().to_string();
+		temp.path = support.pathname();
+
 		//Remove trailing slash
 		if (!temp.path.empty() && temp.path.back() == '/')
 			temp.path.pop_back();
@@ -224,11 +229,17 @@ uri parse(string original, const uri* parent, bool errOut)
 		if (!temp.path.empty() && temp.path.front() == '/')
 			temp.path.erase(0,1);
 
-		temp.querystring = support.query().to_string();
-		temp.anchor = support.fragment().to_string();
+//		temp.querystring = support.query().to_string();
+		temp.querystring = support.search();
+
+//		temp.anchor = support.fragment().to_string();
+		temp.anchor = support.hash();
+
 	}
 	//The original URL can't be parsed
-	catch (network::uri_syntax_error e)
+//	catch (network::uri_syntax_error e)
+	catch (skyr::url_parse_error e)
+
 	{
 		if (errOut)
 			error_out(">> Parsing error on " + original + "\n   Found in " + parent->toString() + " : " + (string)e.what() );

@@ -3,7 +3,7 @@
 
 #include "conditions.hpp"
 #include <string>
-#include "network/uri.hpp"
+#include "skyr/url.hpp"
 
 using std::string;
 
